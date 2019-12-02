@@ -55,19 +55,48 @@ namespace comp110_worksheet_7
 		// Get the path and size (in bytes) of the smallest file below the given directory
 		public static Tuple<string, long> GetSmallestFile(string directory)
 		{
-			throw new NotImplementedException();
+            string smallestFile = "";
+            string[] filePaths = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
+            foreach(string i in filePaths)
+            {
+                if(smallestFile == ""){
+                    smallestFile = i;
+                }
+                else if(new FileInfo(smallestFile).Length > new FileInfo(i).Length){
+                    smallestFile = i;
+                }
+            }
+            return new Tuple<string,long>(smallestFile, new FileInfo(smallestFile).Length);
 		}
 
 		// Get the path and size (in bytes) of the largest file below the given directory
 		public static Tuple<string, long> GetLargestFile(string directory)
 		{
-			throw new NotImplementedException();
+			string largestFile = "";
+            string[] filePaths = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
+            foreach(string i in filePaths)
+            {
+                if(largestFile == ""){
+                    largestFile = i;
+                }
+                else if(new FileInfo(largestFile).Length < new FileInfo(i).Length){
+                    largestFile = i;
+                }
+            }
+            return new Tuple<string,long>(largestFile, new FileInfo(largestFile).Length);
 		}
 
 		// Get all files whose size is equal to the given value (in bytes) below the given directory
 		public static IEnumerable<string> GetFilesOfSize(string directory, long size)
 		{
-			throw new NotImplementedException();
+			string[] filePaths = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
+            foreach(string i in filePaths)
+            {
+                if(new FileInfo(i).Length == size)
+				{
+					yield return i;
+				}
+            }
 		}
 	}
 }
